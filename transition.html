@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<style>
+    #box {
+        width: 100px;
+        height: 100px;
+        background: red;
+    }
+    #box.enter {
+        opacity: 0;
+    }
+    #box.active {
+        opacity: 1;
+        transition: 3s;
+    }
+</style>
+<body>
+<button id="btn">start</button>
+<div id="box" class="">
+
+</div>
+</body>
+<script>
+  let box = document.getElementById('box');
+    document.getElementById('btn').addEventListener('click', () => {
+      let className = box.className;
+      if (/active/.test(className)) {
+        box.className = box.className.replace('active', '').replace('enter', '')
+      } else {
+        box.className += ' enter';
+        setTimeout(()=>{
+          box.className = box.className.replace('enter', '') + ' active';
+        }, 3000)
+      }
+    })
+</script>
+</html>

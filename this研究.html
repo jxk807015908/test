@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>this研究</title>
+</head>
+<body>
+this指向函数运行时所在的环境
+</body>
+<script>
+    function f() {
+      let k = 1;
+      let asdfasdfa = 1;
+      function d() {
+        console.log(asdfasdfa);
+      }
+      console.log(d);
+    }
+    let sd = f();
+    var a = 1;
+  let obj = {
+    a: 2,
+    fn: function () {
+      console.log(this.a);
+      this.fn2 && this.fn2();
+      (function () {
+        console.log(this.a);
+      })();
+    },
+    fn2: function () {
+      console.log(this.a);
+    }
+  }
+  console.log('obj.fn()');
+  obj.fn();
+  console.log('(false || obj.fn)()');
+  (false || obj.fn)();
+  // (false || obj.fn)相当于做了一次赋值操作
+
+  let obj2 = {a: 3};
+  obj2.fn = obj.fn;
+  console.log('obj2.fn()');
+  obj2.fn();
+
+</script>
+</html>

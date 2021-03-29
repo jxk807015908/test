@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>new原理实践</title>
+</head>
+<body>
+
+</body>
+<script>
+  function Parent(name) {
+    this.name = name;
+  }
+
+  console.log(new Parent('a')); // Parent {name: "a"}
+  console.log(Parent('a')); // undefined
+  // 上面的实验证明,new的时候会在构造函数末尾隐式的添加return this;
+
+  function Parent2(name) {
+    this.name = name;
+    return {}
+  }
+
+  console.log(new Parent2('a')); // {}
+  console.log(Parent2('a')); // {}
+  // 上面的实验证明,构造函数return引用类型时，会覆盖掉new隐式添加的return this;
+
+  function Parent3(name) {
+    this.name = name;
+    return ''
+  }
+
+  console.log(new Parent3('a')); // Parent3 {name: "a"}
+  console.log(Parent3('a')); // ''
+  // 上面的实验证明,构造函数return一个非引用类型时，new将隐式添加的return this;
+
+  function Parent4(name) {
+    this.name = name;
+    return new String('1');
+  }
+
+  console.log(new Parent4('a')); // String {"1"}
+  console.log(Parent4('a')); // String {"1"}
+  console.log(new String('1') === '1'); // false
+  // 上面的实验证明,new后返回的是引用类型
+
+  function Parent5(name) {
+    this.name = name;
+    this.__proto__ = '';
+  }
+
+  console.log(new Parent5('a')); // Parent5 {name: "a"} __proto__属性不是''
+  console.log(Parent5('a')); // undefined
+  // 上面的实验证明,new时，在构造函数中时无法改变__proto__指向的
+
+
+  function Parent_(name) {
+    // 使用new时，会隐式的加入this的定义
+    // var this = {};
+    this.name = name;
+    // 使用new时，在必要的时候会隐式的加入return this;
+    // return this;
+  }
+
+</script>
+<script>
+  // 测试速度
+  function C() {
+  }
+
+  let a, b, c, num = 50000000;
+  let start = new Date().getTime();
+  for (let i = 0; i < num; i++) {
+    a = {};
+  }
+  let second = new Date().getTime();
+  for (let i = 0; i < num; i++) {
+    b = new Object();
+  }
+  let third = new Date().getTime();
+  for (let i = 0; i < num; i++) {
+    c = new C();
+  }
+  let fourth = new Date().getTime();
+  console.log(second - start, third - second, fourth - third);
+  // 从结果上看，速度由快到慢为 new C() > {} > new Object()
+  // Object构造器做了额外的处理，所以比对象字面量（使用{}）的方式慢；
+</script>
+</html>

@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>grid</title>
+</head>
+<style>
+    .grid {
+        display: grid;
+    }
+
+    .grid > div {
+        border: 1px solid gray;
+    }
+
+    .red {
+        background: red;
+    }
+
+    .yellow {
+        background: yellow;
+    }
+
+    .green {
+        background: green;
+    }
+    .mini-width {
+        width: 50px;
+    }
+    .big-width {
+        width: 500px;
+    }
+    .mini-height {
+        height: 50px;
+    }
+    .big-height {
+        height: 500px;
+    }
+    span[red] {
+        color: red;
+    }
+</style>
+<body>
+<a href="http://www.ruanyifeng.com/blog/2019/03/grid-layout-tutorial.html">CSS Grid 网格布局教程 - 阮一峰</a>
+
+<h1>grid-template-rows、grid-template-columns</h1>
+<h3><span red>grid-template-rows</span>属性定义每一行的行高，<span red>grid-template-columns</span>属性定义每一列的列宽</h3>
+<h3>下面定义了一个4行*3列的网格，可以看出超出部分列宽依然按照grid-template-columns设置的展示，高度因为超过网格设置而失效</h3>
+<div class="grid" style="grid-template-rows: 100px 100px 100px 50px;grid-template-columns: 200px 200px 200px">
+    <div class="red">1</div>
+    <div class="yellow">1</div>
+    <div class="green">1</div>
+    <div class="red">1</div>
+    <div class="yellow">1</div>
+    <div class="green">1</div>
+    <div class="red">1</div>
+    <div class="yellow">1</div>
+    <div class="green">1</div>
+    <div class="red">1</div>
+    <div class="yellow">1</div>
+    <div class="green">1</div>
+    <div class="red">1</div>
+    <div class="yellow">1</div>
+    <div class="green">1</div>
+</div>
+
+<h1>repeat函数</h1>
+<h3><span red>repeat()</span>函数可以重复生成某个值x次，第一个参数传次数，第二个参数传需要重复的值，如下：repeat(3, 100px) 50px  =》 100px 100px 100px 50px</h3>
+<h3>repeat()只能在grid-template-rows、grid-template-columns属性下使用，并且<span red>不兼容IE</span>，请慎重使用</h3>
+<div class="grid" style="grid-template-rows: repeat(3, 100px) 50px;grid-template-columns: repeat(3, 200px)">
+    <div class="red">1</div>
+    <div class="yellow">1</div>
+    <div class="green">1</div>
+    <div class="red">1</div>
+    <div class="yellow">1</div>
+    <div class="green">1</div>
+    <div class="red">1</div>
+    <div class="yellow">1</div>
+    <div class="green">1</div>
+    <div class="red">1</div>
+    <div class="yellow">1</div>
+    <div class="green">1</div>
+    <div class="red">1</div>
+    <div class="yellow">1</div>
+    <div class="green">1</div>
+</div>
+
+<h1>auto-fill关键字</h1>
+<h3>当容器大小不固定，每一项的大小固定时，如果希望每一行（或一列）容纳尽可能多的单元格，可以在<span red>repeat</span>中使用<span red>auto-fill</span>关键字</h3>
+<div class="grid" style="grid-template-rows: repeat(3, 100px);grid-template-columns: repeat(auto-fill, 100px)">
+    <div class="red">1</div>
+    <div class="yellow">1</div>
+    <div class="green">1</div>
+    <div class="red">1</div>
+    <div class="yellow">1</div>
+    <div class="green">1</div>
+    <div class="red">1</div>
+    <div class="yellow">1</div>
+    <div class="green">1</div>
+    <div class="red">1</div>
+    <div class="yellow">1</div>
+    <div class="green">1</div>
+    <div class="red">1</div>
+    <div class="yellow">1</div>
+    <div class="green">1</div>
+</div>
+
+<h1>fr关键字</h1>
+<h3>使用fr为单位时，使用fr单位的行（或列）的宽度（或高度）成对应比例关系。使用fr在分配宽度（或高度）时，以容器总宽（或高）-固定宽度（或宽度）为总可分配宽度进行分配</h3>
+<div class="grid" style="grid-template-rows: 100px 1fr 3fr;grid-template-columns: 50px 1fr 2fr">
+    <div class="red">1</div>
+    <div class="yellow">1</div>
+    <div class="green">1</div>
+    <div class="red">1</div>
+    <div class="yellow">1</div>
+    <div class="green">1</div>
+    <div class="red">1</div>
+    <div class="yellow">1</div>
+    <div class="green">1</div>
+    <div class="red">1</div>
+    <div class="yellow">1</div>
+    <div class="green">1</div>
+    <div class="red">1</div>
+    <div class="yellow">1</div>
+    <div class="green">1</div>
+</div>
+
+<h1>minmax函数</h1>
+<h3>minmax用来设置一个最大最小值的范围</h3>
+<div class="grid" style="grid-template-rows: 100px 100px 100px;grid-template-columns: 50px 1fr minmax(500px, 2fr)">
+    <div class="red">1</div>
+    <div class="yellow">1</div>
+    <div class="green">1</div>
+    <div class="red">1</div>
+    <div class="yellow">1</div>
+    <div class="green">1</div>
+    <div class="red">1</div>
+    <div class="yellow">1</div>
+    <div class="green">1</div>
+    <div class="red">1</div>
+    <div class="yellow">1</div>
+    <div class="green">1</div>
+    <div class="red">1</div>
+    <div class="yellow">1</div>
+    <div class="green">1</div>
+</div>
+
+<h1>auto关键字</h1>
+<h3>表示让浏览器自适应长度</h3>
+<div class="grid" style="grid-template-rows: 100px 100px 100px;grid-template-columns: 50px auto 50px">
+    <div class="red">1</div>
+    <div class="yellow">1</div>
+    <div class="green">1</div>
+    <div class="red">1</div>
+    <div class="yellow">1</div>
+    <div class="green">1</div>
+    <div class="red">1</div>
+    <div class="yellow">1</div>
+    <div class="green">1</div>
+    <div class="red">1</div>
+    <div class="yellow">1</div>
+    <div class="green">1</div>
+    <div class="red">1</div>
+    <div class="yellow">1</div>
+    <div class="green">1</div>
+</div>
+
+<h1>设置间距（grid-column-gap、grid-row-gap、grid-gap）</h1>
+<h3><span red>grid-column-gap</span>设置列间距；<span red>grid-row-gap</span>设置行间距；<span red>grid-gap</span>是两个的合并属性；grid-gap: 20px; => grid-gap: 20px 20px; =>  grid-column-gap: 20px;grid-row-gap: 20px;</h3>
+<div class="grid" style="grid-template-rows: 100px 100px 100px;grid-template-columns: 50px auto 50px;grid-column-gap: 10px;grid-row-gap: 20px;">
+    <div class="red">1</div>
+    <div class="yellow">1</div>
+    <div class="green">1</div>
+    <div class="red">1</div>
+    <div class="yellow">1</div>
+    <div class="green">1</div>
+    <div class="red">1</div>
+    <div class="yellow">1</div>
+    <div class="green">1</div>
+    <div class="red">1</div>
+    <div class="yellow">1</div>
+    <div class="green">1</div>
+    <div class="red">1</div>
+    <div class="yellow">1</div>
+    <div class="green">1</div>
+</div>
+
+<h1>grid-template-areas、grid-area</h1>
+<h3><span red>grid-template-areas</span>用来设定整体区域布局,不需要展示的区域可以用<span red>.</span>占位</h3>
+<h3><span red>grid-area</span>用来设定当前模块名称，对应区域布局的名称</h3>
+<h3><span red>注意，区域的命名会影响到网格线。每个区域的起始网格线，会自动命名为区域名-start，终止网格线自动命名为区域名-end。比如，区域名为header，则起始位置的水平网格线和垂直网格线叫做header-start，终止位置的水平网格线和垂直网格线叫做header-end</span></h3>
+<div class="grid" style="grid-template-rows: 100px 100px 100px;grid-template-columns: 50px auto 50px;grid-template-areas: 'header header header' 'sidebar main sidebar2' 'footer footer footer' '. . others';">
+    <div class="red" style="grid-area: header;">1</div>
+    <div class="yellow" style="grid-area: sidebar;">1</div>
+    <div class="green" style="grid-area: main;">1</div>
+    <div class="red" style="grid-area: sidebar2;">1</div>
+    <div class="yellow" style="grid-area: footer;">1</div>
+    <div class="green" style="grid-area: others;">1</div>
+</div>
+
+<h1>网格线的使用</h1>
+<h3><span red>grid-column-start</span>设定某一项的列起始位置与在grid布局的哪条网格线重合</h3>
+<h3><span red>grid-column-end</span>设定某一项的列终止位置与在grid布局的哪条网格线重合</h3>
+<h3><span red>grid-column</span>可以同时设置<span red>grid-column-start</span>、<span red>grid-column-end</span>，grid-column: [grid-column-start] / [grid-column-end]</h3>
+<h3><span red>grid-row-start</span>设定某一项的行起始位置与在grid布局的哪条网格线重合</h3>
+<h3><span red>grid-row-end</span>设定某一项的行终止位置与在grid布局的哪条网格线重合</h3>
+<h3><span red>grid-row</span>可以同时设置<span red>grid-row-start</span>、<span red>grid-row-end</span>，grid-row: [grid-row-start] / [grid-row-end]</h3>
+<h3>这四个属性的取值可以是数字（直接代表从左往右（或从上往下）某条网格线）、网格线名称（网格线名称在）<span red>grid-template-rows</span>和<span red>grid-template-columns</span>上设置</h3>
+<div class="grid" style="grid-template-rows: [r1] 100px [r2] 100px [r3] 100px [r4];grid-template-columns: [c1] 50px [c2] auto [c3] 50px [c4];">
+    <div class="red" style="grid-column-start: 2;grid-column-end: 4;">1</div>
+    <div class="yellow" style="grid-column-start: c1;grid-column-end: c3;">1</div>
+    <div class="green" style="">1</div>
+    <div class="red" style="">1</div>
+    <div class="yellow" style="">1</div>
+    <div class="green" style="">1</div>
+</div>
+
+<h1>grid-auto-flow</h1>
+<h3><span red>grid-auto-flow</span>设定布局方向是‘先行后列’（row）还是‘先列后行’(column), 在后面增加<span red>dense</span>时，在布局时会尽可能的填满网格，而不出现空缺。</h3>
+<h3>下面的例子和上面的例子只有grid-auto-flow的值不同，可以看到，第一格被后面的模块填充了</h3>
+<div class="grid" style="grid-template-rows: [r1] 100px [r2] 100px [r3] 100px [r4];grid-template-columns: [c1] 50px [c2] auto [c3] 50px [c4];grid-auto-flow: row dense;">
+    <div class="red" style="grid-column-start: 2;grid-column-end: 4;">1</div>
+    <div class="yellow" style="grid-column-start: c1;grid-column-end: c3;">1</div>
+    <div class="green" style="">1</div>
+    <div class="red" style="">1</div>
+    <div class="yellow" style="">1</div>
+    <div class="green" style="">1</div>
+</div>
+
+
+<h1>单元格内容位置设置</h1>
+<h3><span red>align-items</span>设定单元格内容的垂直位置</h3>
+<h3><span red>justify-items</span>设定单元格内容的水平位置</h3>
+<h3><span red>place-items</span>整合以上两个属性，place-items: [align-items] [justify-items]</h3>
+<h3>可选值： start: 对其单元格的起始边缘  end: 对其单元格的结尾边缘   center: 居中  stretch: 拉伸</h3>
+<div class="grid" style="grid-template-rows: 100px 100px;grid-template-columns: 100px 100px 100px;align-items: center;justify-items: center;">
+    <div class="red mini-width mini-height">1</div>
+    <div class="yellow mini-width mini-height">1</div>
+    <div class="green mini-width mini-height" style="">1</div>
+    <div class="red mini-width mini-height" style="">1</div>
+    <div class="yellow mini-width mini-height" style="">1</div>
+    <div class="green mini-width mini-height" style="">1</div>
+</div>
+
+
+
+<h1>单元格内容位置设置（与上一个的区别是，上一个是整体设置，这个是单个设置）</h1>
+<h3><span red>justify-self</span>设定单元格内容的垂直位置</h3>
+<h3><span red>align-self</span>设定单元格内容的水平位置</h3>
+<h3><span red>place-self</span>整合以上两个属性，place-self: [align-self] [justify-self]</h3>
+<h3>可选值： <pre>
+    start: 对其单元格的起始边缘
+    end: 对其单元格的结尾边缘
+    center: 居中
+    stretch: 拉伸
+</pre></h3>
+<div class="grid" style="grid-template-rows: 200px 200px;grid-template-columns: 200px 200px 200px;">
+    <div class="red mini-width mini-height" style="justify-self: center;align-self: end;">1</div>
+    <div class="yellow">1</div>
+    <div class="green" style="">1</div>
+    <div class="red" style="">1</div>
+    <div class="yellow" style="">1</div>
+    <div class="green" style="">1</div>
+</div>
+
+<h1>整个网格内容位置设置</h1>
+<h3><span red>justify-content</span>设定整个网格内容的垂直位置</h3>
+<h3><span red>align-content</span>设定整个网格内容的水平位置</h3>
+<h3><span red>place-content</span>整合以上两个属性，place-content: [align-content] [justify-content]</h3>
+<h3>可选值： <pre>
+    start: 对其单元格的起始边缘
+    end: 对其单元格的结尾边缘
+    center: 居中
+    stretch: 拉伸
+    space-around: 每个项目两侧的间隔相等。所以，项目之间的间隔比项目与容器边框的间隔大一倍
+    space-between: 项目与项目的间隔相等，项目与容器边框之间没有间隔
+    space-evenly: 项目与项目的间隔相等，项目与容器边框之间也是同样长度的间隔
+</pre></h3>
+<div class="grid big-height" style="grid-template-rows: 100px 100px;grid-template-columns: 100px 100px 100px;justify-content: center;align-content: end;">
+    <div class="red">1</div>
+    <div class="yellow">1</div>
+    <div class="green" style="">1</div>
+    <div class="red" style="">1</div>
+    <div class="yellow" style="">1</div>
+    <div class="green" style="">1</div>
+</div>
+
+<h1>超出的单元格宽、高设置</h1>
+<h3><span red>grid-auto-rows</span>设定超出网格部分的行的高度，超出部分会按值的顺序设定，并且会循环设置</h3>
+<h3><span red>grid-auto-columns</span>设定超出网格部分的列的宽度，超出部分会按值的顺序设定，并且会循环设置（这个应该只有在将grid-auto-flow改为‘先列后行’时才会有用）</h3>
+<div class="grid" style="grid-template-rows: 100px 100px;grid-template-columns: 100px 100px 100px;grid-auto-columns: 50px;grid-auto-rows: 50px 20px;">
+    <div class="red">1</div>
+    <div class="yellow">1</div>
+    <div class="green" style="">1</div>
+    <div class="red" style="">1</div>
+    <div class="yellow" style="">1</div>
+    <div class="green" style="">1</div>
+    <div class="red" style="">1</div>
+    <div class="yellow" style="">1</div>
+    <div class="green" style="">1</div>
+    <div class="red" style="">1</div>
+    <div class="yellow" style="">1</div>
+    <div class="green" style="">1</div>
+    <div class="red" style="">1</div>
+    <div class="yellow" style="">1</div>
+    <div class="green" style="">1</div>
+</div>
+</body>
+</html>
