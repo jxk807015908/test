@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>--demo--</title>
+  <style>
+      @keyframes autoScroll {
+          0% {
+              transform: translateX(0%);
+          }
+          50% {
+              transform: translateX(-100%);
+          }
+          100% {
+              transform: translateX(-100%);
+          }
+      }
+      .wrap {
+          white-space: nowrap;
+          width: 100px;
+          background-color: red;
+          overflow: hidden;
+      }
+      .wrap span {
+          display: inline-block;
+          white-space: nowrap;
+          animation: autoScroll 5s linear 1s infinite;
+      }
+      .wrap2 {
+          width: 500px;
+          background-color: red;
+          overflow: hidden;
+      }
+      .wrap2 div {
+          white-space: nowrap;
+      }
+      .wrap2 div span {
+          display: inline-block;
+      }
+      /*.wrap2 div span + span {*/
+      /*    margin-left: 200px;*/
+      /*}*/
+  </style>
+</head>
+<body>
+<div id="app">
+  <p>css animation</p>
+  <p>完成一次动画的时间保持不变，内容过长时移动速度会很快</p>
+  <div class="wrap">
+    <span>十大科技女与第四发大水发你妈叫你推荐人进一步他接口他人有十大科技女与第四发大水发你妈叫你推荐人进一步他接口他人有十大科技女与第四发大水发你妈叫你推荐人进一步他接口他人有</span>
+  </div>
+  <p>js</p>
+  <p>移动速度恒定</p>
+  <div class="wrap2">
+    <div>
+      <span>十大科技女与第四发大水发你妈叫你推荐人进一步他接口他人有十大科技女与第四发大水发你妈叫你推荐人进一步他接口他人有十大科技女与第四发大水发你妈叫你推荐人进一步他接口他人有</span>
+<!--      <span>十大科技女与第四发大水</span>-->
+    </div>
+  </div>
+</div>
+</body>
+</html>
+
+<script>
+  var speed = 100 / 1000; //数字越大速度越慢 30px/s
+  var wrap2=document.querySelector(".wrap2");
+  var span=wrap2.querySelector("span");
+  var wrap2_w=wrap2.clientWidth;
+  var span_w=span.clientWidth;
+
+  function getScrollAnimation(speed) {
+    let timmer;
+    let unitTime = 20;
+    return function(max, fn) {
+      let cur = 0;
+      clearInterval(timmer);
+      timmer = setInterval(()=>{
+        cur += unitTime * speed;
+        if (cur > max) {
+          cur = max;
+          clearInterval(timmer);
+        }
+        fn && fn(cur);
+      }, unitTime)
+    }
+  }
+
+  const scrollAnimation = getScrollAnimation(speed);
+
+  function addOtherText(span) {
+    let _span = span.cloneNode(true);
+    span.parentNode.appendChild(_span);
+    return _span;
+  }
+
+  function autoScroll() {
+    let marginLeft = 200;
+    let _span = addOtherText(span);
+    _span.style.marginLeft = marginLeft + 'px';
+
+    let stayTime = 3000;
+    let maxOffset = span_w + marginLeft;
+    let atime = maxOffset / speed;
+
+    function scroll() {
+      scrollAnimation(maxOffset, (cur) => {
+        wrap2.querySelector('div').style.transform = `translateX(-${cur}px)`
+      })
+    }
+
+    scroll()
+    setInterval(scroll, atime + stayTime)
+  }
+
+  if (wrap2_w < span_w) {
+    autoScroll();
+  }
+</script>
