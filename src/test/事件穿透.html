@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>--demo--</title>
+</head>
+<body>
+<style>
+  .box {
+      width: 50px;
+      height: 50px;
+      border: 1px solid gray;
+  }
+  .target {
+      width: 500px;
+      height: 500px;
+      pointer-events: none; // 使用该样式即可实现事件穿透
+      position: absolute;
+      background-color: rgba(255, 0, 0, 0.1);
+      z-index: 999;
+  }
+</style>
+<div id="app">
+  <div class="target"></div>
+  <div class="box box1">box1</div>
+  <div class="box box2">box2</div>
+  <div class="box box3">box3</div>
+  <div class="box box4">box4</div>
+  <div class="box box5">box5</div>
+</div>
+</body>
+</html>
+<script>
+[].forEach.call(document.querySelectorAll('.box'), el => {
+  el.addEventListener('click', e => {
+    console.log(e.target.className);
+  })
+})
+</script>
